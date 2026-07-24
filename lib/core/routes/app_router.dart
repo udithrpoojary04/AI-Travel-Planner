@@ -8,6 +8,8 @@ import '../../presentation/pages/auth/register_page.dart';
 import '../../presentation/pages/home/home_page.dart';
 import '../../presentation/pages/trip/create_trip_page.dart';
 import '../../presentation/pages/trip/trip_details_page.dart';
+import '../../presentation/pages/trip/budget_dashboard_page.dart';
+import '../../presentation/pages/profile/profile_page.dart';
 import '../../domain/entities/trip.dart';
 
 class AppRouter {
@@ -51,6 +53,19 @@ class AppRouter {
           final trip = state.extra as Trip;
           return TripDetailsPage(trip: trip);
         },
+      ),
+      GoRoute(
+        path: '/budget_dashboard',
+        name: 'budget_dashboard',
+        builder: (context, state) {
+          final trip = state.extra as Trip;
+          return BudgetDashboardPage(trip: trip);
+        },
+      ),
+      GoRoute(
+        path: '/profile',
+        name: 'profile',
+        builder: (context, state) => const ProfilePage(),
       ),
     ],
   );

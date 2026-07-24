@@ -20,7 +20,10 @@ class TripRepositoryImpl implements TripRepository {
       final tripModel = await remoteDataSource.generateItinerary(tripPreferences);
       return Right(tripModel);
     } catch (e) {
-      return Left('Failed to generate itinerary: \${e.toString()}');
+      if (e.toString().contains('SocketException') || e.toString().contains('Failed host lookup')) {
+        return const Left('No internet connection. Please connect to Wi-Fi or Cellular to plan a trip.');
+      }
+      return Left('Failed to generate itinerary: ${e.toString()}');
     }
   }
 
@@ -30,7 +33,7 @@ class TripRepositoryImpl implements TripRepository {
       final localTrips = await localDataSource.getSavedTrips();
       return Right(localTrips);
     } catch (e) {
-      return Left('Failed to fetch saved trips: \${e.toString()}');
+      return Left('Failed to fetch saved trips: ${e.toString()}');
     }
   }
 
@@ -41,7 +44,7 @@ class TripRepositoryImpl implements TripRepository {
       await localDataSource.saveTrip(tripModel);
       return const Right(null);
     } catch (e) {
-      return Left('Failed to save trip: \${e.toString()}');
+      return Left('Failed to save trip: ${e.toString()}');
     }
   }
 
@@ -51,7 +54,7 @@ class TripRepositoryImpl implements TripRepository {
       await localDataSource.deleteTrip(tripId);
       return const Right(null);
     } catch (e) {
-      return Left('Failed to delete trip: \${e.toString()}');
+      return Left('Failed to delete trip: ${e.toString()}');
     }
   }
 }

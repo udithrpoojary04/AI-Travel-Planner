@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../../domain/entities/trip.dart';
 import '../models/trip_model.dart';
 
@@ -9,7 +10,7 @@ abstract class TripRemoteDataSource {
 
 class TripRemoteDataSourceImpl implements TripRemoteDataSource {
   final http.Client client;
-  final String grokApiKey = 'xai-pU21d6VfOqZqW0H2jZ0Fh8Gk1k5x1iFhYgW9ZfW2T0pW6I0QyR7OqN5H7'; // Provided by user / standard for testing or inject it via env. Actually, Grok API base URL is https://api.x.ai/v1/chat/completions
+  String get grokApiKey => dotenv.env['GROK_API_KEY'] ?? '';
 
   TripRemoteDataSourceImpl({required this.client});
 
@@ -20,8 +21,12 @@ class TripRemoteDataSourceImpl implements TripRemoteDataSource {
 You are an expert AI Travel Planner. Generate a detailed $days-day itinerary for a trip to ${trip.destination}.
 Start Date: ${trip.startDate.toIso8601String().split('T')[0]}
 End Date: ${trip.endDate.toIso8601String().split('T')[0]}
-Budget: \$${trip.budget}
+Budget: ₹${trip.budget} (INR)
 Interests: ${trip.interests.join(', ')}
+
+IMPORTANT: Do not use generic terms like "Local Restaurant". You MUST provide REAL, specific names for all restaurants, cafes, hotels, and attractions (e.g. "Le Meurice").
+CRITICAL: You MUST ONLY use verified, physically existing locations. Do NOT invent or hallucinate names. If you are unsure about a specific hotel or restaurant, use a widely known, undeniably real location (like a major hotel chain or famous landmark) in that city.
+Also, ALL Dinner activities MUST be scheduled at or after 07:30 PM.
 
 Please output the itinerary strictly in the following JSON format without any markdown or extra text. Ensure the JSON is perfectly valid.
 {
@@ -44,13 +49,14 @@ Please output the itinerary strictly in the following JSON format without any ma
 ''';
 
     final response = await client.post(
-      Uri.parse('https://api.x.ai/v1/chat/completions'),
+      Uri.parse('https://api.groq.com/openai/v1/chat/completions'),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer \$grokApiKey',
+        'Authorization': 'Bearer $grokApiKey',
       },
       body: json.encode({
-        'model': 'grok-beta',
+        'model': 'llama-3.3-70b-versatile',
+        'response_format': {'type': 'json_object'},
         'messages': [
           {'role': 'system', 'content': 'You are a JSON-only API. Only output valid JSON.'},
           {'role': 'user', 'content': prompt}
@@ -88,7 +94,7 @@ Please output the itinerary strictly in the following JSON format without any ma
         itineraryModel: itineraryList,
       );
     } else {
-      throw Exception('Failed to generate itinerary: \${response.body}');
+      throw Exception('Failed to generate itinerary: ${response.body}');
     }
   }
 }

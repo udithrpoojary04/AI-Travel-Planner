@@ -1,160 +1,124 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
-  // Light Theme Colors
-  static const Color primaryLight = Color(0xFF006C53); // Teal
-  static const Color onPrimaryLight = Colors.white;
-  static const Color primaryContainerLight = Color(0xFF75F8D1);
-  static const Color onPrimaryContainerLight = Color(0xFF002117);
+  // Premium Dark Theme Colors
+  static const Color background = Color(0xFF0A0E17); // Deep space blue
+  static const Color surface = Color(0xFF141B2D); // Lighter blue for cards
+  static const Color surfaceHighlight = Color(0xFF1F293F); // Highlight
+  
+  static const Color primary = Color(0xFF6366F1); // Indigo 500
+  static const Color primaryGradientEnd = Color(0xFF8B5CF6); // Violet 500
+  
+  static const Color secondary = Color(0xFFF43F5E); // Rose 500
+  
+  static const Color textPrimary = Color(0xFFF8FAFC); // Slate 50
+  static const Color textSecondary = Color(0xFF94A3B8); // Slate 400
 
-  static const Color secondaryLight = Color(0xFF4C635A);
-  static const Color onSecondaryLight = Colors.white;
-  static const Color secondaryContainerLight = Color(0xFFCEE9DD);
-  static const Color onSecondaryContainerLight = Color(0xFF092018);
-
-  static const Color tertiaryLight = Color(0xFF406276);
-  static const Color onTertiaryLight = Colors.white;
-  static const Color tertiaryContainerLight = Color(0xFFC4E7FF);
-  static const Color onTertiaryContainerLight = Color(0xFF001E2D);
-
-  static const Color backgroundLight = Color(0xFFFBFDF9);
-  static const Color onBackgroundLight = Color(0xFF191C1B);
-  static const Color surfaceLight = Color(0xFFFBFDF9);
-  static const Color onSurfaceLight = Color(0xFF191C1B);
-
-  // Dark Theme Colors
-  static const Color primaryDark = Color(0xFF56DBB6);
-  static const Color onPrimaryDark = Color(0xFF00382A);
-  static const Color primaryContainerDark = Color(0xFF00513E);
-  static const Color onPrimaryContainerDark = Color(0xFF75F8D1);
-
-  static const Color secondaryDark = Color(0xFFB3CCC1);
-  static const Color onSecondaryDark = Color(0xFF1E352D);
-  static const Color secondaryContainerDark = Color(0xFF354B43);
-  static const Color onSecondaryContainerDark = Color(0xFFCEE9DD);
-
-  static const Color tertiaryDark = Color(0xFFA8CBE4);
-  static const Color onTertiaryDark = Color(0xFF0C3446);
-  static const Color tertiaryContainerDark = Color(0xFF274B5E);
-  static const Color onTertiaryContainerDark = Color(0xFFC4E7FF);
-
-  static const Color backgroundDark = Color(0xFF191C1B);
-  static const Color onBackgroundDark = Color(0xFFE1E3E0);
-  static const Color surfaceDark = Color(0xFF191C1B);
-  static const Color onSurfaceDark = Color(0xFFE1E3E0);
-
+  // Standard Light Theme (for fallback, though app is dark-mode focused)
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
-      colorScheme: const ColorScheme(
-        brightness: Brightness.light,
-        primary: primaryLight,
-        onPrimary: onPrimaryLight,
-        primaryContainer: primaryContainerLight,
-        onPrimaryContainer: onPrimaryContainerLight,
-        secondary: secondaryLight,
-        onSecondary: onSecondaryLight,
-        secondaryContainer: secondaryContainerLight,
-        onSecondaryContainer: onSecondaryContainerLight,
-        tertiary: tertiaryLight,
-        onTertiary: onTertiaryLight,
-        tertiaryContainer: tertiaryContainerLight,
-        onTertiaryContainer: onTertiaryContainerLight,
-        error: Color(0xFFBA1A1A),
-        onError: Colors.white,
-        errorContainer: Color(0xFFFFDAD6),
-        onErrorContainer: Color(0xFF410002),
-        background: backgroundLight,
-        onBackground: onBackgroundLight,
-        surface: surfaceLight,
-        onSurface: onSurfaceLight,
-      ),
-      fontFamily: 'Inter', // Assuming Inter or Roboto
-      appBarTheme: const AppBarTheme(
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        scrolledUnderElevation: 0,
-        iconTheme: IconThemeData(color: onBackgroundLight),
-        titleTextStyle: TextStyle(
-          color: onBackgroundLight,
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16),
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-        ),
-      ),
-      cardTheme: CardThemeData(
-        elevation: 2,
-        shadowColor: Colors.black.withOpacity(0.1),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
-      ),
+      brightness: Brightness.light,
+      colorScheme: ColorScheme.fromSeed(seedColor: primary, brightness: Brightness.light),
+      textTheme: GoogleFonts.outfitTextTheme(),
     );
   }
 
+  // Premium Dark Theme
   static ThemeData get darkTheme {
+    final baseTextTheme = GoogleFonts.outfitTextTheme(ThemeData.dark().textTheme);
+    
     return ThemeData(
       useMaterial3: true,
-      colorScheme: const ColorScheme(
-        brightness: Brightness.dark,
-        primary: primaryDark,
-        onPrimary: onPrimaryDark,
-        primaryContainer: primaryContainerDark,
-        onPrimaryContainer: onPrimaryContainerDark,
-        secondary: secondaryDark,
-        onSecondary: onSecondaryDark,
-        secondaryContainer: secondaryContainerDark,
-        onSecondaryContainer: onSecondaryContainerDark,
-        tertiary: tertiaryDark,
-        onTertiary: onTertiaryDark,
-        tertiaryContainer: tertiaryContainerDark,
-        onTertiaryContainer: onTertiaryContainerDark,
-        error: Color(0xFFFFB4AB),
-        onError: Color(0xFF690005),
-        errorContainer: Color(0xFF93000A),
-        onErrorContainer: Color(0xFFFFDAD6),
-        background: backgroundDark,
-        onBackground: onBackgroundDark,
-        surface: surfaceDark,
-        onSurface: onSurfaceDark,
+      brightness: Brightness.dark,
+      scaffoldBackgroundColor: background,
+      colorScheme: const ColorScheme.dark(
+        primary: primary,
+        secondary: secondary,
+        surface: surface,
+        background: background,
+        onPrimary: Colors.white,
+        onSecondary: Colors.white,
+        onSurface: textPrimary,
+        onBackground: textPrimary,
       ),
-      fontFamily: 'Inter',
+      textTheme: baseTextTheme.copyWith(
+        displayLarge: baseTextTheme.displayLarge?.copyWith(fontWeight: FontWeight.bold, color: textPrimary),
+        displayMedium: baseTextTheme.displayMedium?.copyWith(fontWeight: FontWeight.bold, color: textPrimary),
+        headlineLarge: baseTextTheme.headlineLarge?.copyWith(fontWeight: FontWeight.bold, color: textPrimary),
+        headlineMedium: baseTextTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w700, color: textPrimary),
+        titleLarge: baseTextTheme.titleLarge?.copyWith(fontWeight: FontWeight.w600, color: textPrimary),
+        bodyLarge: baseTextTheme.bodyLarge?.copyWith(color: textPrimary),
+        bodyMedium: baseTextTheme.bodyMedium?.copyWith(color: textSecondary),
+      ),
       appBarTheme: const AppBarTheme(
-        centerTitle: true,
         backgroundColor: Colors.transparent,
         elevation: 0,
-        scrolledUnderElevation: 0,
-        iconTheme: IconThemeData(color: onBackgroundDark),
+        centerTitle: true,
+        iconTheme: IconThemeData(color: textPrimary),
         titleTextStyle: TextStyle(
-          color: onBackgroundDark,
+          color: textPrimary,
           fontSize: 20,
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w600,
+          fontFamily: 'Outfit',
+        ),
+      ),
+      cardTheme: CardThemeData(
+        color: surface,
+        elevation: 8,
+        shadowColor: Colors.black.withOpacity(0.5),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+          side: const BorderSide(color: Colors.white10, width: 1),
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          elevation: 0,
+          backgroundColor: primary,
+          foregroundColor: Colors.white,
+          elevation: 4,
+          shadowColor: primary.withOpacity(0.4),
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16),
           ),
-          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+          textStyle: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Outfit',
+          ),
         ),
       ),
-      cardTheme: CardThemeData(
-        elevation: 2,
-        shadowColor: Colors.black.withOpacity(0.3),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: surface,
+        labelStyle: const TextStyle(color: textSecondary),
+        hintStyle: const TextStyle(color: textSecondary),
+        prefixIconColor: textSecondary,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: Colors.white10, width: 1),
         ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: Colors.white10, width: 1),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: primary, width: 2),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
+          borderSide: const BorderSide(color: secondary, width: 1),
+        ),
+      ),
+      snackBarTheme: SnackBarThemeData(
+        backgroundColor: surfaceHighlight,
+        contentTextStyle: const TextStyle(color: textPrimary, fontFamily: 'Outfit'),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        behavior: SnackBarBehavior.floating,
       ),
     );
   }
