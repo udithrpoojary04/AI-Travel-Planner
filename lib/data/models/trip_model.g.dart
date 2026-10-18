@@ -24,13 +24,14 @@ class TripModelAdapter extends TypeAdapter<TripModel> {
       budget: fields[4] as double,
       interests: (fields[5] as List).cast<String>(),
       itineraryModel: (fields[6] as List).cast<ItineraryDayModel>(),
+      packingList: fields[7] == null ? [] : (fields[7] as List).cast<String>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, TripModel obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(8)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -44,7 +45,9 @@ class TripModelAdapter extends TypeAdapter<TripModel> {
       ..writeByte(5)
       ..write(obj.interests)
       ..writeByte(6)
-      ..write(obj.itineraryModel);
+      ..write(obj.itineraryModel)
+      ..writeByte(7)
+      ..write(obj.packingList);
   }
 
   @override

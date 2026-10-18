@@ -19,6 +19,8 @@ class TripModel extends Trip {
   final List<String> interests;
   @HiveField(6)
   final List<ItineraryDayModel> itineraryModel;
+  @HiveField(7, defaultValue: <String>[])
+  final List<String> packingList;
 
   const TripModel({
     required this.id,
@@ -28,6 +30,7 @@ class TripModel extends Trip {
     required this.budget,
     required this.interests,
     this.itineraryModel = const [],
+    this.packingList = const [],
   }) : super(
           id: id,
           destination: destination,
@@ -36,6 +39,7 @@ class TripModel extends Trip {
           budget: budget,
           interests: interests,
           itinerary: itineraryModel,
+          packingList: packingList,
         );
 
   factory TripModel.fromJson(Map<String, dynamic> json) {
@@ -50,6 +54,7 @@ class TripModel extends Trip {
               ?.map((e) => ItineraryDayModel.fromJson(e))
               .toList() ??
           [],
+      packingList: List<String>.from(json['packingList'] ?? []),
     );
   }
 
@@ -62,6 +67,7 @@ class TripModel extends Trip {
       'budget': budget,
       'interests': interests,
       'itinerary': itineraryModel.map((e) => e.toJson()).toList(),
+      'packingList': packingList,
     };
   }
 
@@ -76,6 +82,7 @@ class TripModel extends Trip {
       itineraryModel: trip.itinerary
           .map((day) => ItineraryDayModel.fromEntity(day))
           .toList(),
+      packingList: trip.packingList,
     );
   }
 }

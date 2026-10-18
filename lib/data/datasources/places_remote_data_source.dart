@@ -29,7 +29,7 @@ class PlacesRemoteDataSource {
   Future<List<PlacePrediction>> getPlacePredictions(String query) async {
     if (query.isEmpty) return [];
     
-    final uri = Uri.parse('https://nominatim.openstreetmap.org/search?q=\$query&format=json&limit=5');
+    final uri = Uri.parse('https://nominatim.openstreetmap.org/search?q=\$query&format=json&limit=30');
     
     try {
       final response = await client.get(

@@ -1,10 +1,12 @@
 import 'dart:ui';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:http/http.dart' as http;
 import '../../../domain/entities/expense.dart';
 import '../../../domain/entities/trip.dart';
 import '../../bloc/expense/expense_bloc.dart';
@@ -13,15 +15,67 @@ import '../../bloc/expense/expense_state.dart';
 import '../../../injection_container.dart' as di;
 import '../../../core/theme/app_theme.dart';
 
-class BudgetDashboardPage extends StatelessWidget {
+class BudgetDashboardPage extends StatefulWidget {
   final Trip trip;
 
   const BudgetDashboardPage({super.key, required this.trip});
 
   @override
+  State<BudgetDashboardPage> createState() => _BudgetDashboardPageState();
+}
+
+class _BudgetDashboardPageState extends State<BudgetDashboardPage> {
+  String _selectedCurrency = 'INR';
+  Map<String, double> _rates = {'INR': 1.0, 'USD': 0.012, 'EUR': 0.011, 'GBP': 0.009}; // Fallback rates
+  bool _isLoadingRates = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchRates();
+  }
+
+  Future<void> _fetchRates() async {
+    setState(() => _isLoadingRates = true);
+    try {
+      final response = await http.get(Uri.parse('https://api.exchangerate-api.com/v4/latest/INR'));
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        final rates = data['rates'] as Map<String, dynamic>;
+        if (mounted) {
+          setState(() {
+            _rates = {
+              'INR': 1.0,
+              'USD': (rates['USD'] as num).toDouble(),
+              'EUR': (rates['EUR'] as num).toDouble(),
+              'GBP': (rates['GBP'] as num).toDouble(),
+            };
+          });
+        }
+      }
+    } catch (e) {
+      // Ignore and use fallback rates
+    } finally {
+      if (mounted) setState(() => _isLoadingRates = false);
+    }
+  }
+
+  String _formatAmount(double amountInInr) {
+    final rate = _rates[_selectedCurrency] ?? 1.0;
+    final converted = amountInInr * rate;
+    
+    switch (_selectedCurrency) {
+      case 'USD': return '\$${converted.toStringAsFixed(2)}';
+      case 'EUR': return '€${converted.toStringAsFixed(2)}';
+      case 'GBP': return '£${converted.toStringAsFixed(2)}';
+      default: return '₹${converted.toStringAsFixed(0)}';
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => di.sl<ExpenseBloc>()..add(LoadExpensesEvent(trip.id)),
+      create: (context) => di.sl<ExpenseBloc>()..add(LoadExpensesEvent(widget.trip.id)),
       child: Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -32,6 +86,32 @@ class BudgetDashboardPage extends StatelessWidget {
               child: Container(color: Colors.transparent),
             ),
           ),
+          actions: [
+            if (_isLoadingRates)
+              const Center(child: Padding(padding: EdgeInsets.only(right: 16), child: SizedBox(width: 16, height: 16, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))))
+            else
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                    value: _selectedCurrency,
+                    dropdownColor: AppTheme.surfaceHighlight,
+                    icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
+                    items: ['INR', 'USD', 'EUR', 'GBP'].map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                      );
+                    }).toList(),
+                    onChanged: (newValue) {
+                      if (newValue != null) {
+                        setState(() => _selectedCurrency = newValue);
+                      }
+                    },
+                  ),
+                ),
+              ),
+          ],
         ),
         body: Stack(
           children: [
@@ -89,7 +169,7 @@ class BudgetDashboardPage extends StatelessWidget {
   }
 
   Widget _buildDashboard(BuildContext context, List<Expense> expenses, double totalSpent) {
-    final double remaining = trip.budget - totalSpent;
+    final double remaining = widget.trip.budget - totalSpent;
 
     return SingleChildScrollView(
       child: Padding(
@@ -104,7 +184,7 @@ class BudgetDashboardPage extends StatelessWidget {
                   child: _buildSummaryCard(
                     context,
                     'Total Budget',
-                    trip.budget,
+                    widget.trip.budget,
                     AppTheme.primary,
                   ).animate().fadeIn(duration: 400.ms).slideY(begin: 0.1),
                 ),
@@ -201,7 +281,7 @@ class BudgetDashboardPage extends StatelessWidget {
                     onDismissed: (_) {
                       context.read<ExpenseBloc>().add(DeleteExpenseEvent(
                             expenseId: expense.id,
-                            tripId: trip.id,
+                            tripId: widget.trip.id,
                           ));
                     },
                     child: Container(
@@ -224,7 +304,7 @@ class BudgetDashboardPage extends StatelessWidget {
                         title: Text(expense.title, style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
                         subtitle: Text("${DateFormat('MMM d').format(expense.date)} • ${expense.category}", style: const TextStyle(color: AppTheme.textSecondary)),
                         trailing: Text(
-                          '₹${expense.amount.toStringAsFixed(2)}',
+                          _formatAmount(expense.amount),
                           style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16, color: Colors.white),
                         ),
                       ),
@@ -260,7 +340,7 @@ class BudgetDashboardPage extends StatelessWidget {
           Text(title, style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: AppTheme.textSecondary)),
           const SizedBox(height: 12),
           Text(
-            '₹${amount.toStringAsFixed(0)}',
+            _formatAmount(amount),
             style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: color,
@@ -346,7 +426,7 @@ class BudgetDashboardPage extends StatelessWidget {
               TextField(
                 controller: amountController,
                 keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                decoration: const InputDecoration(labelText: 'Amount', prefixIcon: Icon(Icons.currency_rupee)),
+                decoration: const InputDecoration(labelText: 'Amount (INR)', prefixIcon: Icon(Icons.currency_rupee)),
               ),
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
@@ -367,7 +447,7 @@ class BudgetDashboardPage extends StatelessWidget {
                   if (titleController.text.isNotEmpty && amount != null) {
                     final newExpense = Expense(
                       id: const Uuid().v4(),
-                      tripId: trip.id,
+                      tripId: widget.trip.id,
                       title: titleController.text,
                       amount: amount,
                       category: selectedCategory,

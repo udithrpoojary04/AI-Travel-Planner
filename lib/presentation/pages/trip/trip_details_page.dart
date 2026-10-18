@@ -5,6 +5,9 @@ import 'package:intl/intl.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
 import '../../../domain/entities/trip.dart';
 import '../../../domain/entities/weather.dart';
 import '../../../data/datasources/places_remote_data_source.dart';
@@ -55,6 +58,68 @@ class _TripDetailsPageState extends State<TripDetailsPage> {
     };
   }
 
+  Future<void> _exportPdf() async {
+    final pdf = pw.Document();
+
+    pdf.addPage(
+      pw.MultiPage(
+        pageFormat: PdfPageFormat.a4,
+        build: (pw.Context context) {
+          return [
+            pw.Header(
+              level: 0,
+              child: pw.Text('Trip to ${widget.trip.destination}', style: pw.TextStyle(fontSize: 24, fontWeight: pw.FontWeight.bold)),
+            ),
+            pw.Text("${DateFormat('MMMM d, yyyy').format(widget.trip.startDate)} - ${DateFormat('MMMM d, yyyy').format(widget.trip.endDate)}"),
+            pw.Text("Budget: INR ${widget.trip.budget}"),
+            pw.SizedBox(height: 20),
+            
+            pw.Header(level: 1, child: pw.Text('Itinerary')),
+            ...widget.trip.itinerary.map((day) {
+              return pw.Column(
+                crossAxisAlignment: pw.CrossAxisAlignment.start,
+                children: [
+                  pw.Text('Day ${day.dayNumber} - ${DateFormat('EEEE, MMM d').format(day.date)}', style: pw.TextStyle(fontSize: 16, fontWeight: pw.FontWeight.bold)),
+                  pw.SizedBox(height: 10),
+                  ...day.activities.map((activity) {
+                    return pw.Container(
+                      margin: const pw.EdgeInsets.only(bottom: 10, left: 10),
+                      child: pw.Column(
+                        crossAxisAlignment: pw.CrossAxisAlignment.start,
+                        children: [
+                          pw.Text('${activity.time}: ${activity.title}', style: pw.TextStyle(fontWeight: pw.FontWeight.bold)),
+                          pw.Text(activity.description),
+                          if (activity.location != null) pw.Text('Location: ${activity.location}'),
+                          if (activity.costEstimate != null) pw.Text('Cost: INR ${activity.costEstimate}'),
+                        ],
+                      ),
+                    );
+                  }),
+                  pw.SizedBox(height: 15),
+                ],
+              );
+            }),
+            
+            if (widget.trip.packingList.isNotEmpty) ...[
+              pw.Header(level: 1, child: pw.Text('Packing List')),
+              ...widget.trip.packingList.map((item) {
+                return pw.Row(
+                  crossAxisAlignment: pw.CrossAxisAlignment.start,
+                  children: [
+                    pw.Text('• '),
+                    pw.Expanded(child: pw.Text(item)),
+                  ],
+                );
+              }),
+            ]
+          ];
+        },
+      ),
+    );
+
+    await Printing.sharePdf(bytes: await pdf.save(), filename: 'Trip_to_${widget.trip.destination}.pdf');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,6 +133,18 @@ class _TripDetailsPageState extends State<TripDetailsPage> {
           ),
         ),
         actions: [
+          Container(
+            margin: const EdgeInsets.only(right: 8),
+            decoration: BoxDecoration(
+              color: AppTheme.secondary.withOpacity(0.2),
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.picture_as_pdf, color: Colors.white),
+              onPressed: _exportPdf,
+              tooltip: 'Export PDF',
+            ),
+          ),
           Container(
             margin: const EdgeInsets.only(right: 8),
             decoration: BoxDecoration(
@@ -174,7 +251,7 @@ class _TripDetailsPageState extends State<TripDetailsPage> {
                       child: Padding(
                         padding: EdgeInsets.all(32.0),
                         child: Center(
-                          child: Text('No itinerary available for this trip.'),
+                          child: Text('No itinerary available for this trip.', style: TextStyle(color: Colors.white)),
                         ),
                       ),
                     )
@@ -191,7 +268,47 @@ class _TripDetailsPageState extends State<TripDetailsPage> {
                         childCount: widget.trip.itinerary.length,
                       ),
                     ),
-                  const SliverToBoxAdapter(child: SizedBox(height: 40)),
+                  
+                  // Packing List Section
+                  if (widget.trip.packingList.isNotEmpty) ...[
+                    SliverToBoxAdapter(
+                      child: Padding(
+                        padding: const EdgeInsets.all(24.0),
+                        child: Text(
+                          'Packing List',
+                          style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                        ),
+                      ).animate().fadeIn(delay: 800.ms).slideY(begin: 0.1),
+                    ),
+                    SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          final item = widget.trip.packingList[index];
+                          return Container(
+                            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                            padding: const EdgeInsets.all(16),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withOpacity(0.05),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(color: Colors.white10),
+                            ),
+                            child: Row(
+                              children: [
+                                const Icon(Icons.check_circle_outline, color: AppTheme.secondary, size: 20),
+                                const SizedBox(width: 12),
+                                Expanded(child: Text(item, style: const TextStyle(color: Colors.white, fontSize: 16))),
+                              ],
+                            ),
+                          ).animate().fadeIn(delay: (800 + (index * 50)).ms).slideX(begin: 0.1);
+                        },
+                        childCount: widget.trip.packingList.length,
+                      ),
+                    ),
+                  ],
+                  const SliverToBoxAdapter(child: SizedBox(height: 80)),
                 ],
               );
             },

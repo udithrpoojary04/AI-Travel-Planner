@@ -8,6 +8,7 @@ class Trip extends Equatable {
   final double budget;
   final List<String> interests;
   final List<ItineraryDay> itinerary;
+  final List<String> packingList;
 
   const Trip({
     required this.id,
@@ -17,6 +18,7 @@ class Trip extends Equatable {
     required this.budget,
     required this.interests,
     this.itinerary = const [],
+    this.packingList = const [],
   });
 
   @override
@@ -28,6 +30,7 @@ class Trip extends Equatable {
         budget,
         interests,
         itinerary,
+        packingList,
       ];
 }
 

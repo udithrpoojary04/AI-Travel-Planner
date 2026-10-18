@@ -1,0 +1,296 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033
+{\fonttbl
+{\f0\froman\fcharset0 Times New Roman;}
+{\f1\fswiss\fcharset0 Calibri;}
+{\f2\fmodern\fcharset0 Consolas;}
+}
+{\colortbl ;
+\red0\green0\blue0;
+\red31\green78\blue121;
+\red46\green117\blue182;
+\red89\green89\blue89;
+\red192\green0\blue0;
+}
+\paperw12240\paperh15840\margl1440\margr1440\margt1440\margb1440\viewkind1\uc1
+
+\pard\qc\sb240\sa120{\f1\fs40\b\cf2 PROJECT REPORT}
+\par
+\pard\qc\sb120\sa120{\f1\fs32\b SMART AI TRAVEL PLANNER & EXPENSE MANAGEMENT SYSTEM}
+\par
+\pard\qc\sb60\sa240{\f1\fs22\i A Cross-Platform Mobile Application Built with Flutter, Clean Architecture, and Retrieval-Augmented Generation (RAG)}
+\par
+\pard\qc\sb60\sa360{\f1\fs20\cf4 --------------------------------------------------------------------------------------------------------------------------------}
+\par
+
+\pard\sb120\sa120{\f1\fs26\b\cf2 TABLE OF CONTENTS}
+\par
+\pard\li360\sa60{\f1\fs22 1. Title and Project Overview}
+\par
+\pard\li360\sa60{\f1\fs22 2. Introduction}
+\par
+\pard\li720\sa60{\f1\fs22 2.1 Background}
+\par
+\pard\li720\sa60{\f1\fs22 2.2 Problem Statement}
+\par
+\pard\li720\sa60{\f1\fs22 2.3 Objectives of the Project}
+\par
+\pard\li720\sa60{\f1\fs22 2.4 Scope of the Project}
+\par
+\pard\li360\sa60{\f1\fs22 3. Technology Stack}
+\par
+\pard\li720\sa60{\f1\fs22 3.1 Mobile Framework and Programming Language}
+\par
+\pard\li720\sa60{\f1\fs22 3.2 Architectural Pattern and State Management}
+\par
+\pard\li720\sa60{\f1\fs22 3.3 Backend Services and Authentication}
+\par
+\pard\li720\sa60{\f1\fs22 3.4 Artificial Intelligence and RAG Pipeline}
+\par
+\pard\li720\sa60{\f1\fs22 3.5 External APIs and Geospatial Services}
+\par
+\pard\li720\sa60{\f1\fs22 3.6 Local Database and Caching}
+\par
+\pard\li720\sa60{\f1\fs22 3.7 Data Visualization and Document Generation}
+\par
+\pard\li360\sa60{\f1\fs22 4. Working and System Architecture}
+\par
+\pard\li720\sa60{\f1\fs22 4.1 System Architectural Design (Clean Architecture)}
+\par
+\pard\li720\sa60{\f1\fs22 4.2 Step-by-Step Working Mechanism}
+\par
+\pard\li720\sa60{\f1\fs22 4.3 Detailed Feature Modules}
+\par
+\pard\li360\sa60{\f1\fs22 5. Conclusion and Future Scope}
+\par
+\pard\li720\sa60{\f1\fs22 5.1 Conclusion}
+\par
+\pard\li720\sa60{\f1\fs22 5.2 Key Challenges and Engineering Solutions}
+\par
+\pard\li720\sa60{\f1\fs22 5.3 Future Enhancements}
+\par
+\pard\sb120\sa360{\f1\fs20\cf4 --------------------------------------------------------------------------------------------------------------------------------}
+\par
+
+\pard\sb240\sa120{\f1\fs28\b\cf2 1. TITLE AND PROJECT OVERVIEW}
+\par
+\pard\sa120\sl276\slmult1{\f1\fs22\b Project Title: \b0 Smart AI Travel Planner & Expense Management Mobile Application}
+\par
+\pard\sa120\sl276\slmult1{\f1\fs22\b Domain: \b0 Mobile Application Development, Artificial Intelligence (LLMs and RAG), Location-Based Services, Personal Finance Tracking}
+\par
+\pard\sa120\sl276\slmult1{\f1\fs22\b Platform: \b0 Cross-Platform Mobile Application (Android & iOS)}
+\par
+\pard\sa120\sl276\slmult1{\f1\fs22\b Target Audience: \b0 Leisure travelers, business travelers, students, and tourists seeking structured itineraries, reliable local recommendations, and real-time expense management.}
+\par
+
+\pard\sb240\sa120{\f1\fs28\b\cf2 2. INTRODUCTION}
+\par
+
+\pard\sb120\sa60{\f1\fs24\b\cf3 2.1 Background}
+\par
+\pard\sa120\sl276\slmult1{\f1\fs22 Travel planning is traditionally a fragmented and exhausting exercise. An individual preparing for a vacation or business tour typically has to juggle multiple websites and independent applications: travel blogs for general inspiration, review portals for hotels and dining, weather forecasts for clothing decisions, mapping tools for daily navigation, and note-taking apps or spreadsheets to track expenses. Because these services do not communicate with each other, travelers frequently end up with disorganized schedules, unrealistic travel times, and unexpected budget deficits.}
+\par
+\pard\sa120\sl276\slmult1{\f1\fs22 With the emergence of Large Language Models (LLMs), automated itinerary creation has become feasible. However, generic generative AI tools often suffer from hallucinations—fabricating non-existent hotels, suggesting closed venues, or providing inaccurate local logistics. This project bridges this gap by engineering a unified mobile application that pairs generative AI with verified real-world geospatial and historical data using a Retrieval-Augmented Generation (RAG) architecture.}
+\par
+
+\pard\sb120\sa60{\f1\fs24\b\cf3 2.2 Problem Statement}
+\par
+\pard\sa120\sl276\slmult1{\f1\fs22 The core problems identified in contemporary travel planning include:}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b App Fragmentation: \b0 Users are forced to switch between at least 4 to 6 separate applications during a single trip for planning, maps, weather, and budgeting.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Unreliable AI Recommendations: \b0 Generic AI models frequently invent fake restaurants, hallucinate hotel names, or suggest attractions located in entirely different cities.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Financial Mismanagement: \b0 Without integrated, category-wise expense tracking against a fixed budget, travelers often overspend before the trip concludes.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Lack of Offline Dependability: \b0 Most travel web apps require constant high-speed data, rendering them useless in flight, transit, or remote destinations with poor network coverage.}
+\par
+
+\pard\sb120\sa60{\f1\fs24\b\cf3 2.3 Objectives of the Project}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab To build an intuitive, performant cross-platform mobile application in Flutter using Dart.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab To implement Clean Architecture and BLoC pattern for a robust, decoupled, and testable codebase.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab To eliminate AI hallucinations by grounding an open LLM (Llama-3.3-70b-versatile via Groq) using real-time verified places from the Geoapify API and official landmark summaries from the Wikipedia API.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab To embed live weather forecasting (OpenWeatherMap API) and interactive OpenStreetMap navigation (flutter_map) directly into the itinerary screen.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab To provide real-time budget tracking with category analytics and visual distribution charts using FL Chart.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab To enable offline storage using Hive NoSQL database and provide instant PDF itinerary export.}
+\par
+
+\pard\sb120\sa60{\f1\fs24\b\cf3 2.4 Scope of the Project}
+\par
+\pard\sa120\sl276\slmult1{\f1\fs22 The application encompasses the complete lifecycle of a journey:}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Pre-Trip Phase: \b0 Account registration/login, user preference input (destination, dates, budget, interests), RAG-based itinerary generation, weather forecast inspection, and packing checklist review.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b In-Trip Phase: \b0 Access to daily schedules, geographic map views, real-time logging of expenses across multiple categories, and active budget consumption monitoring.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Post-Trip & Archival: \b0 Complete offline persistence of previous trips and expenses, as well as exportable, print-ready PDF itinerary reports.}
+\par
+
+\pard\sb240\sa120{\f1\fs28\b\cf2 3. TECHNOLOGY STACK}
+\par
+\pard\sa120\sl276\slmult1{\f1\fs22 The technology stack was chosen based on performance, cross-platform capability, clean code separation, and real-world reliability.}
+\par
+
+\pard\sb120\sa60{\f1\fs24\b\cf3 3.1 Mobile Framework and Programming Language}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Flutter (SDK ^3.12.2): \b0 Google's open-source UI toolkit that compiles directly to native ARM machine code for Android and iOS. It delivers high-performance 60/120 FPS rendering and a rich widget library.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Dart: \b0 A strongly typed, modern object-oriented language featuring sound null safety, asynchronous programming (Futures/Streams), and optimized garbage collection.}
+\par
+
+\pard\sb120\sa60{\f1\fs24\b\cf3 3.2 Architectural Pattern and State Management}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Clean Architecture: \b0 Segregates the software into three distinct layers: Domain (Entities, Repository Interfaces), Data (Models, Data Sources, Repository Implementations), and Presentation (BLoCs, Pages, Widgets).}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b flutter_bloc (^9.1.1): \b0 Industry-standard state management library enforcing reactive programming through unidirectional data flow (Events in -> BLoC -> States out).}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b GetIt (^9.2.1): \b0 Lightweight Service Locator for Dependency Injection, allowing loose coupling between classes and simplified unit testing.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b GoRouter (^17.3.0): \b0 Declarative routing package that handles navigation paths, typed parameter transfer, and transition animations.}
+\par
+
+\pard\sb120\sa60{\f1\fs24\b\cf3 3.3 Backend Services and Authentication}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Firebase Core & Authentication (^4.12.1 / ^6.5.6): \b0 Manages user authentication securely with email/password authentication and Google Sign-In.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Cloud Firestore (^6.7.1): \b0 Cloud-hosted NoSQL document database utilized for cloud backup of user profile and trip data.}
+\par
+
+\pard\sb120\sa60{\f1\fs24\b\cf3 3.4 Artificial Intelligence and RAG Pipeline}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Groq Cloud API: \b0 High-performance inference platform powered by Language Processing Units (LPUs), serving the open-weight Llama-3.3-70b-versatile model with near-instantaneous token generation.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Retrieval-Augmented Generation (RAG): \b0 Rather than asking the LLM to invent itineraries from raw memory, verified external data (hotels, restaurants, attractions) is retrieved first and injected into the prompt context.}
+\par
+
+\pard\sb120\sa60{\f1\fs24\b\cf3 3.5 External APIs and Geospatial Services}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Geoapify Places API: \b0 Queries verified point-of-interest databases to obtain physically operational hotels, guest houses, and restaurants for the chosen destination.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Wikipedia REST API: \b0 Extracts authentic historical and geographic summaries of the destination to ensure cultural sites and heritage spots are accurately scheduled.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b OpenWeatherMap API: \b0 Provides real-time meteorological metrics including temperature, atmospheric description, and weather icons.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b flutter_map (^7.0.2) & latlong2: \b0 Renders responsive, tile-based OpenStreetMap views without expensive proprietary SDK licensing.}
+\par
+
+\pard\sb120\sa60{\f1\fs24\b\cf3 3.6 Local Database and Caching}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Hive & Hive Flutter (^2.2.3 / ^1.1.0): \b0 Lightweight, lightning-fast key-value NoSQL database written in pure Dart. Utilizes custom generated TypeAdapters for binary serialization of Trip, Expense, and Activity models.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b flutter_dotenv (^6.0.1): \b0 Protects private API keys and tokens by loading configuration variables from a local .env file.}
+\par
+
+\pard\sb120\sa60{\f1\fs24\b\cf3 3.7 Data Visualization and Document Generation}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b FL Chart (^1.2.0): \b0 Renders interactive and responsive pie charts for visual breakdown of expense distribution by category.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b pdf (^3.12.0) & printing (^5.14.3): \b0 Builds multi-page, formatted A4 PDF documents directly on the client device for instant printing or sharing.}
+\par
+
+\pard\sb240\sa120{\f1\fs28\b\cf2 4. WORKING AND SYSTEM ARCHITECTURE}
+\par
+
+\pard\sb120\sa60{\f1\fs24\b\cf3 4.1 System Architectural Design (Clean Architecture)}
+\par
+\pard\sa120\sl276\slmult1{\f1\fs22 The project follows the Clean Architecture pattern to separate responsibilities into three isolated layers:}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22 1. \b Presentation Layer: \b0 Contains UI Pages (Login, Home, CreateTrip, TripDetails, BudgetDashboard), custom widgets, and BLoC components (AuthBloc, TripBloc, ExpenseBloc). It listens to state emissions and updates the screen reactively.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22 2. \b Domain Layer: \b0 The core business logic layer containing pure Dart entities (Trip, Expense, Weather, ItineraryDay, Activity) and abstract repository contracts. It contains zero references to Flutter UI or external packages, ensuring complete testability.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22 3. \b Data Layer: \b0 Implements the domain contracts. It contains Data Transfer Objects (Models) with JSON parsing and Hive serialization logic, plus Local and Remote Data Sources for API interaction and database persistence.}
+\par
+
+\pard\sb120\sa60{\f1\fs24\b\cf3 4.2 Step-by-Step Working Mechanism}
+\par
+\pard\sa120\sl276\slmult1{\f1\fs22 The complete lifecycle of an operation proceeds through the following sequential stages:}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Phase 1: Authentication and Session Verification \b0\par
+Upon application startup, main() initializes Firebase, Hive local boxes, and GetIt dependency injection. AuthBloc checks the local session token via CheckAuthStatusEvent. If authenticated, the user is routed to HomePage; otherwise, they proceed through OnboardingScreen and LoginPage.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Phase 2: Trip Input Capture \b0\par
+The user opens CreateTripPage and specifies the destination, travel date range (e.g., 3 days), total available budget in INR (Rs.), and one or more interest tags (e.g., Heritage, Food, Nature, Adventure). The page validates the inputs and dispatches GenerateTripEvent to TripBloc.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Phase 3: RAG Retrieval and Context Grounding \b0\par
+Before calling the generative model, TripRemoteDataSourceImpl performs two asynchronous external queries:
+\par (a) Geoapify Places API retrieves a list of up to 15 real, verified hotels and 15 operational restaurants located in the target destination.
+\par (b) Wikipedia REST API retrieves the official historical extract and landmark overview for the destination.
+\par This verified factual data is combined with the user's budget and interests into an augmented prompt.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Phase 4: Constrained LLM Inference and Parsing \b0\par
+The augmented prompt is transmitted via HTTP POST to the Groq API running llama-3.3-70b-versatile. The system prompt enforces strict constraints: the model must only use the verified places, schedule dinners after 07:30 PM, eliminate generic placeholders, and return pure JSON adhering to the itinerary schema. The response is parsed into TripModel and emitted as TripGeneratedState.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Phase 5: Weather and Mapping Visualization \b0\par
+On TripDetailsPage, the app concurrently requests live weather data from OpenWeatherMap (displaying current temperature and sky condition) and initializes an interactive OpenStreetMap widget centered at the destination coordinates using flutter_map.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Phase 6: Real-Time Expense Tracking & Analytics \b0\par
+During the journey, the traveler navigates to BudgetDashboardPage. Whenever money is spent, the user logs the item title, amount, and category (Food, Travel, Lodging, Activities, Shopping). ExpenseBloc updates the local Hive box, calculates the total expenditure and remaining budget balance, and updates an interactive FL Chart pie chart showing percentage allocation.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Phase 7: Offline Persistence and PDF Export \b0\par
+All trips, itineraries, activities, and expenses are serialized to local Hive storage boxes ('trips' and 'expenses'). If internet access is lost, the entire app remains fully functional. Furthermore, users can click 'Export Itinerary' to compile the complete trip details and packing checklist into a clean, printable PDF document.}
+\par
+
+\pard\sb120\sa60{\f1\fs24\b\cf3 4.3 Detailed Feature Modules}
+\par
+\pard\sa120\sl276\slmult1{\f1\fs22 The application comprises the following core functional modules:}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22 1. \b Authentication Module: \b0 Manages registration, login, secure session token persistence, and sign-out through Firebase Authentication.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22 2. \b Trip Management Module: \b0 Collects user travel preferences, displays previously saved trips, and provides an itinerary viewer.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22 3. \b AI & RAG Engine Module: \b0 Coordinates real-world data fetching (Geoapify and Wikipedia) and executes structured LLM prompting via Groq.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22 4. \b Weather & Interactive Maps Module: \b0 Delivers live forecasts and renders dynamic OpenStreetMap tiles.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22 5. \b Expense Tracker & Analytics Module: \b0 Manages expense records, updates remaining budget balance, and renders dynamic pie charts.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22 6. \b Offline Persistence & Export Module: \b0 Persists data in binary Hive boxes and compiles printable PDF documents using the pdf package.}
+\par
+
+\pard\sb240\sa120{\f1\fs28\b\cf2 5. CONCLUSION AND FUTURE SCOPE}
+\par
+
+\pard\sb120\sa60{\f1\fs24\b\cf3 5.1 Conclusion}
+\par
+\pard\sa120\sl276\slmult1{\f1\fs22 The Smart AI Travel Planner & Expense Management System demonstrates a practical, production-ready solution to the challenges of modern travel organization. By pairing the Flutter framework with Clean Architecture and the BLoC pattern, the application achieves high performance, clean separation of concerns, and reliable cross-platform portability.}
+\par
+\pard\sa120\sl276\slmult1{\f1\fs22 More importantly, this project addresses the critical limitation of modern generative AI: factual hallucinations. By introducing a Retrieval-Augmented Generation (RAG) pipeline that queries real-world point-of-interest databases (Geoapify) and historical repositories (Wikipedia), the application guarantees that generated itineraries contain verified, physically existing hotels, restaurants, and cultural landmarks. Combined with offline NoSQL storage, live weather forecasting, interactive mapping, real-time expense analytics, and instant PDF generation, the application provides an all-in-one assistant for modern travelers.}
+\par
+
+\pard\sb120\sa60{\f1\fs24\b\cf3 5.2 Key Challenges and Engineering Solutions}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Challenge 1: Preventing AI Hallucinations in Itineraries \b0\par
+\i Problem: \i0 Standard LLMs often invent imaginary hotel names or suggest attractions outside the target city.\par
+\i Solution: \i0 Grounded the prompt using real-time API responses from Geoapify (verified hotels/restaurants) and Wikipedia (official regional extracts), accompanied by strict system instructions forbidding fabricated entities.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Challenge 2: Guaranteeing Valid JSON Output from LLMs \b0\par
+\i Problem: \i0 Language models occasionally return conversational preamble or malformed formatting that crashes client-side JSON parsers.\par
+\i Solution: \i0 Configured Groq's response_format parameter to \{'type': 'json_object'\} and provided explicit JSON schema templates directly in the prompt.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Challenge 3: Ensuring Uninterrupted Offline Usability \b0\par
+\i Problem: \i0 Travelers frequently experience spotty internet connection in remote or transit areas.\par
+\i Solution: \i0 Integrated Hive NoSQL local boxes with custom TypeAdapters to serialize and store all trip data, daily activities, and expenses directly on the physical device.}
+\par
+
+\pard\sb120\sa60{\f1\fs24\b\cf3 5.3 Future Enhancements}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Multi-Currency Support: \b0 Automatic conversion of foreign expenditures to the traveler's home currency using real-time foreign exchange rates.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Collaborative Group Planning: \b0 Enabling multiple travelers to co-create itineraries and split shared group expenses in real time using Cloud Firestore stream listeners.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Booking Portal Integration: \b0 Direct API links to airline, train, and hotel reservation systems for in-app reservations.}
+\par
+\pard\fi-360\li720\sa80\sl276\slmult1{\f1\fs22\bullet\tab\b Turn-by-Turn GPS Navigation: \b0 In-app route planning between scheduled daily activities with estimated walking and driving times.}
+\par
+
+\pard\sb240\sa120{\f1\fs20\cf4 --------------------------------------------------------------------------------------------------------------------------------}
+\par
+\pard\qc\sb120\sa120{\f1\fs20\i [End of Project Report]}
+\par
+}

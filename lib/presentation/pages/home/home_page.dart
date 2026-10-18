@@ -7,6 +7,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import '../../widgets/loading_shimmer.dart';
 import '../../../domain/entities/trip.dart';
 import '../../bloc/trip/trip_bloc.dart';
+import '../../bloc/trip/trip_event.dart';
 import '../../bloc/trip/trip_state.dart';
 import '../../../core/theme/app_theme.dart';
 
@@ -98,15 +99,35 @@ class HomePage extends StatelessWidget {
                     );
                   }
                   
+                  final sortedTrips = List<Trip>.from(state.trips)
+                    ..sort((a, b) => a.startDate.compareTo(b.startDate));
+                    
                   return ListView.builder(
                     padding: const EdgeInsets.all(24),
-                    itemCount: state.trips.length,
+                    itemCount: sortedTrips.length,
                     itemBuilder: (context, index) {
-                      final trip = state.trips[index];
-                      return TripCard(trip: trip)
-                          .animate()
-                          .fadeIn(duration: 400.ms, delay: (100 * index).ms)
-                          .slideY(begin: 0.2, end: 0, curve: Curves.easeOutQuad);
+                      final trip = sortedTrips[index];
+                      return Dismissible(
+                        key: Key(trip.id),
+                        direction: DismissDirection.endToStart,
+                        background: Container(
+                          alignment: Alignment.centerRight,
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          margin: const EdgeInsets.only(bottom: 20),
+                          decoration: BoxDecoration(
+                            color: AppTheme.secondary,
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                          child: const Icon(Icons.delete, color: Colors.white),
+                        ),
+                        onDismissed: (_) {
+                          context.read<TripBloc>().add(DeleteTripEvent(trip.id));
+                        },
+                        child: TripCard(trip: trip)
+                            .animate()
+                            .fadeIn(duration: 400.ms, delay: (100 * index).ms)
+                            .slideY(begin: 0.2, end: 0, curve: Curves.easeOutQuad),
+                      );
                     },
                   );
                 } else if (state is TripError) {
@@ -185,6 +206,12 @@ class TripCard extends StatelessWidget {
                                   color: Colors.white,
                                 ),
                           ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.delete_outline, color: AppTheme.secondary),
+                          onPressed: () {
+                            context.read<TripBloc>().add(DeleteTripEvent(trip.id));
+                          },
                         ),
                         Container(
                           padding: const EdgeInsets.all(8),

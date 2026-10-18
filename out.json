@@ -1,0 +1,107 @@
+[
+  {
+    "place_id": 252233766,
+    "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 8188056610,
+    "lat": "13.2148487",
+    "lon": "74.9975172",
+    "class": "amenity",
+    "type": "restaurant",
+    "place_rank": 30,
+    "importance": -0.002351267849486579,
+    "addresstype": "amenity",
+    "name": "Hotel Taj Mahal",
+    "display_name": "Hotel Taj Mahal, \u0cae\u0cbe\u0cb0\u0ccd\u0c95\u0cc6\u0c9f\u0ccd \u0cb0\u0cb8\u0ccd\u0ca4\u0cc6, Parpale, Karkala, Karkala taluk, Udupi, Karnataka, 574104, India",
+    "boundingbox": [
+      "13.2147987",
+      "13.2148987",
+      "74.9974672",
+      "74.9975672"
+    ]
+  },
+  {
+    "place_id": 252249775,
+    "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 8188056616,
+    "lat": "13.2131417",
+    "lon": "75.0029156",
+    "class": "amenity",
+    "type": "restaurant",
+    "place_rank": 30,
+    "importance": -0.007855210394378063,
+    "addresstype": "amenity",
+    "name": "Hotel Prakash",
+    "display_name": "Hotel Prakash, \u0cae\u0cbe\u0cb0\u0ccd\u0c95\u0cc6\u0c9f\u0ccd \u0cb0\u0cb8\u0ccd\u0ca4\u0cc6, Parpale, Karkala, Karkala taluk, Udupi, Karnataka, 574104, India",
+    "boundingbox": [
+      "13.2130917",
+      "13.2131917",
+      "75.0028656",
+      "75.0029656"
+    ]
+  },
+  {
+    "place_id": 252642572,
+    "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 8188056628,
+    "lat": "13.2093469",
+    "lon": "74.9837802",
+    "class": "amenity",
+    "type": "restaurant",
+    "place_rank": 30,
+    "importance": -0.012533051705789541,
+    "addresstype": "amenity",
+    "name": "Appuroopa Nonveg Restaurant",
+    "display_name": "Appuroopa Nonveg Restaurant, Karkala Udupi Bypass, Parpale, Karkala, Karkala taluk, Udupi, Karnataka, 574104, India",
+    "boundingbox": [
+      "13.2092969",
+      "13.2093969",
+      "74.9837302",
+      "74.9838302"
+    ]
+  },
+  {
+    "place_id": 254498155,
+    "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 8188056566,
+    "lat": "13.2320555",
+    "lon": "74.9843837",
+    "class": "amenity",
+    "type": "restaurant",
+    "place_rank": 30,
+    "importance": -0.020577549527823997,
+    "addresstype": "amenity",
+    "name": "Bismillah Chicken Stall",
+    "display_name": "Bismillah Chicken Stall, SH1, Kukkunduru, Karkala taluk, Udupi, Karnataka, 574104, India",
+    "boundingbox": [
+      "13.2320055",
+      "13.2321055",
+      "74.9843337",
+      "74.9844337"
+    ]
+  },
+  {
+    "place_id": 252623859,
+    "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http://osm.org/copyright",
+    "osm_type": "node",
+    "osm_id": 8188056554,
+    "lat": "13.2382422",
+    "lon": "74.9834233",
+    "class": "amenity",
+    "type": "restaurant",
+    "place_rank": 30,
+    "importance": -0.026459240058626127,
+    "addresstype": "amenity",
+    "name": "Hotel Usha",
+    "display_name": "Hotel Usha, SH1, Kukkunduru, Karkala taluk, Udupi, Karnataka, 576117, India",
+    "boundingbox": [
+      "13.2381922",
+      "13.2382922",
+      "74.9833733",
+      "74.9834733"
+    ]
+  }
+]

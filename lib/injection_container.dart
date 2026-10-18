@@ -3,7 +3,8 @@ import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'data/datasources/trip_local_data_source.dart';
 import 'data/datasources/trip_remote_data_source.dart';
-import 'data/datasources/places_remote_data_source.dart';
+import 'data/datasources/geoapify_remote_data_source.dart';
+import 'data/datasources/wikipedia_remote_data_source.dart';
 import 'data/datasources/weather_remote_data_source.dart';
 import 'data/models/trip_model.dart';
 import 'data/models/expense_model.dart';
@@ -36,7 +37,11 @@ Future<void> init() async {
 
   // Data sources
   sl.registerLazySingleton<TripRemoteDataSource>(
-    () => TripRemoteDataSourceImpl(client: sl()),
+    () => TripRemoteDataSourceImpl(
+      client: sl(), 
+      geoapifySource: sl(),
+      wikiSource: sl(),
+    ),
   );
 
   sl.registerLazySingleton<TripLocalDataSource>(
@@ -47,8 +52,12 @@ Future<void> init() async {
     () => ExpenseLocalDataSourceImpl(expenseBox: sl()),
   );
 
-  sl.registerLazySingleton<PlacesRemoteDataSource>(
-    () => PlacesRemoteDataSource(client: sl()),
+  sl.registerLazySingleton<GeoapifyRemoteDataSource>(
+    () => GeoapifyRemoteDataSource(client: sl()),
+  );
+
+  sl.registerLazySingleton<WikipediaRemoteDataSource>(
+    () => WikipediaRemoteDataSource(client: sl()),
   );
 
   sl.registerLazySingleton<WeatherRemoteDataSource>(
